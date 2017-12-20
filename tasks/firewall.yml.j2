@@ -1,0 +1,18 @@
+---
+# firewall tasks file for {{ role_name }}
+{%- set refnode_role_name = role_name.split('.') %}
+
+# Note this module expects a firewalld system present,
+# customize it to your own requirements
+#
+# This area is work in progress
+
+#- name: Ensure firewall rules for service {{ refnode_role_name[1] }} are present
+#  firewalld:
+#    service: https
+#    permanent: true
+#    state: enabled
+#  when: {{ refnode_role_name[1] }}_firewall_enabled == 'yes'
+#  tags:
+#    - firewall
+

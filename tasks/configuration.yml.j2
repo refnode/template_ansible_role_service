@@ -1,0 +1,33 @@
+---
+# configuration tasks file for {{ role_name }}
+{%- set refnode_role_name = role_name.split('.') %}
+
+- name: Ensure config dir for {{ refnode_role_name[1] }} is present
+  file:
+    path: "{{ '{{' }} {{ refnode_role_name[1] }}_config_dir {{ '}}' }}"
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+  tags:
+    - configuration
+
+- name: Ensure config file for {{ refnode_role_name[1] }} is present
+  template:
+    src: "{{ refnode_role_name[1] }}.conf.j2"
+    dest: "{{ '{{' }} {{ refnode_role_name[1] }}_config_file {{ '}}' }}"
+    owner: root
+    group: root
+    mode: 0644
+  register: {{ refnode_role_name[1] }}_config_file
+  tags:
+    - configuration
+
+- name: Ensure config for {{ refnode_role_name[1] }} is valid
+  shell: /path/to/check_command --with-config-file-param /path/to/configfile
+  when: {{ refnode_role_name[1] }}_config_file.changed and {{ refnode_role_name[1] }}_service_state == 'started'
+  notify:
+    - service restart {{ refnode_role_name[1] }}
+  tags:
+    - configuration_check
+    - configuration

@@ -1,0 +1,9 @@
+---
+# handlers file for {{ role_name }}
+{%- set refnode_role_name = role_name.split('.') %}
+
+- name: service restart {{ refnode_role_name[1] }}
+  service:
+    name: "{{ '{{' }} {{ refnode_role_name[1] }}_service_name {{ '}}' }}"
+    state: restarted
+

@@ -1,0 +1,20 @@
+---
+# service tasks file for {{ role_name }}
+{%- set refnode_role_name = role_name.split('.') %}
+
+- name: Ensure service {{ refnode_role_name[1] }} activation state
+  service:
+    name: "{{ '{{' }} {{ refnode_role_name[1] }}_service_name {{ '}}' }}"
+    enabled: "{{ '{{' }} {{ refnode_role_name[1] }}_service_enabled {{ '}}' }}"
+  tags:
+    - service
+    - service_action_state
+
+- name: Ensure service {{ refnode_role_name[1] }} run state
+  service:
+    name: "{{ '{{' }} {{ refnode_role_name[1] }}_service_name {{ '}}' }}"
+    state: "{{ '{{' }} {{ refnode_role_name[1] }}_service_state {{ '}}' }}"
+  tags:
+    - service
+    - service_run_state
+

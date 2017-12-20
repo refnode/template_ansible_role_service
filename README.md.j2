@@ -1,0 +1,81 @@
+{% set refnode_role_name = role_name.split('.') -%}
+# Ansible Role: {{ role_name }}
+
+A brief description of the role goes here.
+
+This role follows a service role standard where tasks are executed in the following steps:
+
+* tasks/repository.yml    Run tasks to add custom package repos or file downloads
+* tasks/package.yml       Run tasks to install software packages
+* tasks/configuration.yml Run tasks to create config dirs and templated config files
+* tasks/firewall.yml      Run tasks to prepare firewall rules for the service
+* tasks/service.yml       Run tasks to ensure service activation and run state
+
+## Requirements
+
+Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+
+## Role Variables
+
+A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+
+Default variables used for tasks/repository:
+
+    {{ refnode_role_name[1] }}_repository_gpgcheck: "yes"
+    {{ refnode_role_name[1] }}_repository_enabled: "no"
+
+Default variables used for tasks/package:
+
+    {{ refnode_role_name[1] }}_package_name: "{{ refnode_role_name[1] }}"
+    {{ refnode_role_name[1] }}_package_state: "present"
+
+Default variables used for tasks/config:
+
+    {{ refnode_role_name[1] }}_config_dir: "{{ '{{ os_sysconfdir }}' }}/{{ refnode_role_name[1] }}"
+    {{ refnode_role_name[1] }}_config_file: "{{ '{{' }} {{ refnode_role_name[1] }}_config_dir {{ ' }}' }}/{{ refnode_role_name[1] }}.conf"
+
+All configurations params of for {{ refnode_role_name[1] }} managed by this role through templating follow this rules:
+
+* Prefix: {{ refnode_role_name[1] }}_config_param_
+* Config parameter lower cased, replace camelcase, sections, '-', '.' by '_'
+
+    {{ refnode_role_name[1] }}_config_param_listen: '127.0.0.1:80'
+
+Defaults variables used for tasks/firewall:
+
+    {{ refnode_role_name[1] }}_firewall_enabled: 'no'
+
+Default variables used for tasks/service, also used for handlers/:
+
+    {{ refnode_role_name[1] }}_service_name: "{{ refnode_role_name[1] }}"
+    {{ refnode_role_name[1] }}_service_enabled: "yes"
+    {{ refnode_role_name[1] }}_service_state: "started"
+
+## Dependencies
+
+A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+
+## Example Playbook
+
+Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+
+    - hosts: servers
+      vars:
+        {{ refnode_role_name[1] }}_service_state: "started"
+      roles:
+         - {{ role_name }}
+
+## License
+
+Apache License v2
+
+## Author Information
+
+An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+
+## References
+
+* [{{ refnode_role_name[1] }} Website](https://www.example.com)
+* [{{ refnode_role_name[1] }} Documentation](https://www.example.com/docs)
+* [Fedora Packaging:RPMMacros](https://fedoraproject.org/wiki/Packaging:RPMMacros)
+

@@ -1,0 +1,13 @@
+---
+# repository tasks file for {{ role_name }}
+{%- set refnode_role_name = role_name.split('.') %}
+
+#- name: Ensure custom repository for role {{ role_name }} is present
+#  yum_repository:
+#    name: "custom-repo-{{ role_name | replace('.', '-') }}"
+#    description: Custom repository provided by ansible role {{ role_name }}
+#    baseurl: https://download.example.com/pub/.../$releasever/$basearch/
+#    gpgcheck: "{{ '{{' }} {{ refnode_role_name[1] }}_repository_gpgcheck {{ '}}' }}"
+#    enabled: "{{ '{{' }} {{ refnode_role_name[1] }}_repository_enabled {{ '}}' }}"
+#  tags:
+#    - repository
